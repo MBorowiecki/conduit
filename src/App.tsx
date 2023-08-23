@@ -1,31 +1,35 @@
-import React from "react";
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-import Article from "./Article";
-import ArticleList from "./ArticleList";
-import Editor from "./Editor";
-import LoginRegister from "./LoginRegister";
-import Logout from "./Logout";
-import Profile from "./Profile";
-import Settings from "./Settings";
+import { ApplicationRouter } from "core/navigation/components";
+import { ApplicationContext } from "core/context";
+import { ILoggedProfile } from "core/interfaces";
+import { useLocalStorage } from "core/localStorage/hooks/useLocalStorage.hook";
 
-function App() {
+const App = (): JSX.Element => {
+  const { get: getUserProfile, remove: removeUserProfile } = useLocalStorage<ILoggedProfile>("userProfile", true);
+  const [profile, setProfile] = useState<ILoggedProfile>();
+
+  // TODO: Check if user token is valid
+  useEffect(() => {
+    const userProfile = getUserProfile();
+
+    if (userProfile) {
+      setProfile(userProfile);
+    } else {
+      removeUserProfile();
+    }
+  }, []);
+
   return (
-    <Router>
-      <Switch>
-        <Route path="/editor" exact component={Editor} />
-        <Route path="/editor/:slug" exact component={Editor} />
-        <Route path="/login" exact component={LoginRegister} />
-        <Route path="/logout" exact component={Logout} />
-        <Route path="/profile/:username" exact component={Profile} />
-        <Route path="/profile/:username/favorites" exact component={Profile} />
-        <Route path="/register" exact component={LoginRegister} />
-        <Route path="/settings" exact component={Settings} />
-        <Route path="/:slug" exact component={Article} />
-        <Route path="/" component={ArticleList} />
-      </Switch>
-    </Router>
+    <ApplicationContext.Provider
+      value={{
+        userProfile: profile,
+        setUserProfile: setProfile,
+      }}
+    >
+      <ApplicationRouter />
+    </ApplicationContext.Provider>
   );
-}
+};
 
 export default App;
