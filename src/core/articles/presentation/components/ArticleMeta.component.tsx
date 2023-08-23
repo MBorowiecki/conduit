@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 
 import { IArticleMetaProps } from "core/articles/data";
-import { getProfileNameSlug } from "core/articles/helpers";
+import { getImageOrPlaceholder, getProfileNameSlug } from "core/articles/helpers";
 
 export const ArticleMeta = ({ article, actionButtons }: IArticleMetaProps): JSX.Element => {
   const author = article.author;
@@ -9,7 +9,7 @@ export const ArticleMeta = ({ article, actionButtons }: IArticleMetaProps): JSX.
   return (
     <div className="article-meta">
       <a href={`/#/profile/${getProfileNameSlug(author)}`}>
-        <img src={author.image} />
+        <img src={getImageOrPlaceholder(author)} />
       </a>
       <div className="info">
         <a href={`/#/profile/${getProfileNameSlug(author)}`} className="author">
