@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { IUseLocalStorageReturn } from "../interfaces";
+import { ILoggedProfile } from "core/interfaces";
 
-export const useLocalStorage = <T,>(key: string, getOnInit = false): IUseLocalStorageReturn<T> => {
-  const [value, setValue] = useState<T | undefined>();
+export const useLocalStorage = (key: string, getOnInit = false): IUseLocalStorageReturn<ILoggedProfile> => {
+  const [value, setValue] = useState<ILoggedProfile | undefined>();
 
   const get = () => {
     const item = localStorage.getItem(key);
@@ -10,11 +11,11 @@ export const useLocalStorage = <T,>(key: string, getOnInit = false): IUseLocalSt
     if (item) {
       setValue(JSON.parse(item));
 
-      return JSON.parse(item) as T;
+      return JSON.parse(item);
     }
   };
 
-  const set = (value: T) => {
+  const set = (value: ILoggedProfile) => {
     localStorage.setItem(key, JSON.stringify(value));
 
     setValue(value);

@@ -8,5 +8,5 @@ export const GetProfileDataInfo = async (username: string, token?: string): Prom
 
   const response = await axios.get(`${serverAddress}/profiles/${username}`, config);
 
-  return response.data.profile as IProfile | undefined;
+  return response.data.profile;
 };
