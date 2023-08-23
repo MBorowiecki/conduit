@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { ApplicationRouter } from "core/navigation/components";
 import { ApplicationContext } from "core/context";
 import { ILoggedProfile } from "core/interfaces";
-import { useLocalStorage } from "core/localStorage/hooks/useLocalStorage.hook";
+import { useLocalStorage } from "core/localStorage/hooks/useCurrentUserLocalStorage.hook";
 
 const App = (): JSX.Element => {
-  const { get: getUserProfile, remove: removeUserProfile } = useLocalStorage<ILoggedProfile>("userProfile", true);
+  const { get: getUserProfile, remove: removeUserProfile } = useLocalStorage("userProfile", true);
   const [profile, setProfile] = useState<ILoggedProfile>();
 
   // TODO: Check if user token is valid

@@ -11,7 +11,7 @@ export const getAllArticles = async (token?: string): Promise<IArticle[]> => {
   const config = token ? { headers: { Authorization: `Token: ${token}` } } : {};
   const response = await axios.get(`${serverAddress}/articles`, config);
 
-  return response.data.articles as IArticle[];
+  return response.data.articles;
 };
 
 export const getArticle = async (slug: string, token?: string): Promise<IArticle> => {
@@ -19,7 +19,7 @@ export const getArticle = async (slug: string, token?: string): Promise<IArticle
 
   const response = await axios.get(`${serverAddress}/articles/${slug}`, config);
 
-  return response.data.article as IArticle;
+  return response.data.article;
 };
 
 export const getArticlesByAuthor = async (author: IProfile, token?: string): Promise<IArticle[]> => {
@@ -28,7 +28,7 @@ export const getArticlesByAuthor = async (author: IProfile, token?: string): Pro
 
   const response = await axios.get(`${serverAddress}/articles?author=${authorSlug}`, config);
 
-  return response.data.articles as IArticle[];
+  return response.data.articles;
 };
 
 export const markArticleAsFavourite = async (slug: string, token: string, favourited: boolean): Promise<IArticle[]> => {
@@ -38,5 +38,5 @@ export const markArticleAsFavourite = async (slug: string, token: string, favour
     ? await axios.post(`${serverAddress}/articles/${slug}/favorite`, {}, config)
     : await axios.delete(`${serverAddress}/articles/${slug}/favorite`, config);
 
-  return response.data.articles as IArticle[];
+  return response.data.articles;
 };
