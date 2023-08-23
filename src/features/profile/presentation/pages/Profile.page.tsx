@@ -11,6 +11,7 @@ import { useProfileFollow } from "core/profile/presentation";
 import { ApplicationContext } from "core/context";
 
 import { useProfileArticles, useProfileInfo } from "../hooks";
+import { getImageOrPlaceholder } from "core/articles/helpers";
 
 export const Profile = (): JSX.Element => {
   const { username } = useParams<IProfileInfoPageParams>();
@@ -35,7 +36,7 @@ export const Profile = (): JSX.Element => {
           <div className="container">
             <div className="row">
               <div className="col-xs-12 col-md-10 offset-md-1">
-                <img src={profileInfo?.image} className="user-img" />
+                <img src={profileInfo && getImageOrPlaceholder(profileInfo)} className="user-img" />
                 <h4>{profileInfo?.username}</h4>
                 <p>{profileInfo?.bio}</p>
 
